@@ -1,0 +1,15 @@
+D:\C#_Projetos\FollowMe\Application\bin\Debug\net7.0\FollowMe.Application.deps.json
+D:\C#_Projetos\FollowMe\Application\bin\Debug\net7.0\FollowMe.Application.dll
+D:\C#_Projetos\FollowMe\Application\bin\Debug\net7.0\FollowMe.Application.pdb
+D:\C#_Projetos\FollowMe\Application\bin\Debug\net7.0\FollowMe.Domain.dll
+D:\C#_Projetos\FollowMe\Application\bin\Debug\net7.0\FollowMe.Domain.pdb
+D:\C#_Projetos\FollowMe\Application\obj\Debug\net7.0\FollowMe.Application.csproj.AssemblyReference.cache
+D:\C#_Projetos\FollowMe\Application\obj\Debug\net7.0\FollowMe.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\C#_Projetos\FollowMe\Application\obj\Debug\net7.0\FollowMe.Application.AssemblyInfoInputs.cache
+D:\C#_Projetos\FollowMe\Application\obj\Debug\net7.0\FollowMe.Application.AssemblyInfo.cs
+D:\C#_Projetos\FollowMe\Application\obj\Debug\net7.0\FollowMe.Application.csproj.CoreCompileInputs.cache
+D:\C#_Projetos\FollowMe\Application\obj\Debug\net7.0\FollowMe.Application.csproj.CopyComplete
+D:\C#_Projetos\FollowMe\Application\obj\Debug\net7.0\FollowMe.Application.dll
+D:\C#_Projetos\FollowMe\Application\obj\Debug\net7.0\refint\FollowMe.Application.dll
+D:\C#_Projetos\FollowMe\Application\obj\Debug\net7.0\FollowMe.Application.pdb
+D:\C#_Projetos\FollowMe\Application\obj\Debug\net7.0\ref\FollowMe.Application.dll

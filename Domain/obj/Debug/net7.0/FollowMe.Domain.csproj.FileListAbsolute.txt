@@ -1,0 +1,12 @@
+D:\C#_Projetos\FollowMe\Domain\bin\Debug\net7.0\FollowMe.Domain.deps.json
+D:\C#_Projetos\FollowMe\Domain\bin\Debug\net7.0\FollowMe.Domain.dll
+D:\C#_Projetos\FollowMe\Domain\bin\Debug\net7.0\FollowMe.Domain.pdb
+D:\C#_Projetos\FollowMe\Domain\obj\Debug\net7.0\FollowMe.Domain.csproj.AssemblyReference.cache
+D:\C#_Projetos\FollowMe\Domain\obj\Debug\net7.0\FollowMe.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\C#_Projetos\FollowMe\Domain\obj\Debug\net7.0\FollowMe.Domain.AssemblyInfoInputs.cache
+D:\C#_Projetos\FollowMe\Domain\obj\Debug\net7.0\FollowMe.Domain.AssemblyInfo.cs
+D:\C#_Projetos\FollowMe\Domain\obj\Debug\net7.0\FollowMe.Domain.csproj.CoreCompileInputs.cache
+D:\C#_Projetos\FollowMe\Domain\obj\Debug\net7.0\FollowMe.Domain.dll
+D:\C#_Projetos\FollowMe\Domain\obj\Debug\net7.0\refint\FollowMe.Domain.dll
+D:\C#_Projetos\FollowMe\Domain\obj\Debug\net7.0\FollowMe.Domain.pdb
+D:\C#_Projetos\FollowMe\Domain\obj\Debug\net7.0\ref\FollowMe.Domain.dll
