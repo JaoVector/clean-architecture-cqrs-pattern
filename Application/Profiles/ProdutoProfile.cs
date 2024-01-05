@@ -14,8 +14,8 @@ namespace FollowMe.Application.Profiles
     {
         public ProdutoProfile()
         {
-            CreateMap<CreateProdutoRequest, Produto>();
-            CreateMap<Produto, ReadProdutoResponse>();
+            CreateMap<CreateProdutoRequest, Carrinho>();
+            CreateMap<Carrinho, ReadProdutoResponse>();
         }
     }
 }

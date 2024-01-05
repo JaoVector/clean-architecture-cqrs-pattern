@@ -15,6 +15,6 @@ namespace FollowMe.Application.UseCases.Endereco.Responses
         public string? Cep { get; set; }
         public string? Rua { get; set; }
         public string? Bairro { get; set; }
-        public int Numero { get; set; }
+        public int? Numero { get; set; }
     }
 }

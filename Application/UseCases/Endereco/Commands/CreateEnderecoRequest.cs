@@ -15,5 +15,6 @@ namespace FollowMe.Application.UseCases.Endereco.Commands
         public string? Rua { get; set; }
         public string? Bairro { get; set; }
         public int Numero { get; set; }
+        public Guid UsuarioId { get; set; }
     }
 }

@@ -1,10 +1,7 @@
 ﻿using FollowMe.Domain.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace FollowMe.Domain.Entities
 {
@@ -17,6 +14,15 @@ namespace FollowMe.Domain.Entities
         public StatusPedido Status { get; set; } = StatusPedido.Feito;
 
         public Guid UsuarioId { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual Usuario? Usuario { get; set; }
+
+        public Guid EnderecoId { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
+        public virtual Endereco? Endereco { get; set; }
+
+        public virtual ICollection<ItemPedido> ItensPedido { get; set; }
     }
 }

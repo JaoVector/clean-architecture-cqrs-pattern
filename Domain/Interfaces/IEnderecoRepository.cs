@@ -9,6 +9,6 @@ namespace FollowMe.Domain.Interfaces
 {
     public interface IEnderecoRepository : IBaseRepository<Endereco>
     {
-
+        Task<Endereco> ConsultaEnderecoPorId(Guid EnderecoId, CancellationToken cancellation);
     }
 }

@@ -8,9 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Shared\Exceptions\" />
-    <Folder Include="UseCases\Pedido\QueryHandlers\" />
-    <Folder Include="UseCases\Pedido\Queries\" />
-    <Folder Include="UseCases\Usuario\QueryHandlers\" />
   </ItemGroup>
 
   <ItemGroup>

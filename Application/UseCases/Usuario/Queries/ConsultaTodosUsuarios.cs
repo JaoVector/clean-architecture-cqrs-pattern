@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FollowMe.Application.UseCases.Usuario.Responses;
+using MediatR;
 
 namespace FollowMe.Application.UseCases.Usuario.Queries
 {
-    internal class ConsultaTodosUsuarios
-    {
-    }
+    public sealed record ConsultaTodosUsuarios(int skip, int take) : IRequest<List<ReadAllUserResponse>>; 
 }

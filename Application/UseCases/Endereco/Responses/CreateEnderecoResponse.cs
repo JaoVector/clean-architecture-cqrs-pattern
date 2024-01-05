@@ -1,11 +1,4 @@
-﻿using FollowMe.Application.UseCases.Usuario.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FollowMe.Application.UseCases.Endereco.Responses
+﻿namespace FollowMe.Application.UseCases.Endereco.Responses
 {
     public sealed record CreateEnderecoResponse
     {
@@ -14,5 +7,7 @@ namespace FollowMe.Application.UseCases.Endereco.Responses
         public string? Rua { get; set; }
         public string? Bairro { get; set; }
         public int Numero { get; set; }
+        public Guid UsuarioId { get; set; }
+        public string? DataCriacao { get; set; }
     }
 }

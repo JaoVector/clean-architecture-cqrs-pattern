@@ -14,6 +14,6 @@ namespace FollowMe.Domain.Interfaces
         void Atualiza(T entity);
         void Exclui(T entity);
         Task<T> Consulta(Expression<Func<T, bool>> expression, CancellationToken cancellationToken);
-        Task<List<T>> ConsultaTodos(int take, int skip, CancellationToken cancellationToken);
+        Task<List<T>> ConsultaTodos(int skip, int take, CancellationToken cancellationToken);
     }
 }

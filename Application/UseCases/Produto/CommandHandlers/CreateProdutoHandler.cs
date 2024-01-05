@@ -1,39 +1,56 @@
-﻿using AutoMapper;
-using FollowMe.Application.UseCases.Produto.Commands;
+﻿using FollowMe.Application.UseCases.Produto.Commands;
 using FollowMe.Application.UseCases.Produto.Responses;
 using FollowMe.Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FollowMe.Application.UseCases.Produto.CommandHandlers
 {
-    public class CreateProdutoHandler : IRequestHandler<CreateProdutoRequest, ReadProdutoResponse>
+    public class CreateProdutoHandler : IRequestHandler<CreateProdutoRequest, CreateProdutoResponse>
     {
 
         private readonly IProdutoRepository _produtoRepository;
         private readonly IUnityOfWork _work;
-        private readonly IMapper _mapper;
 
-        public CreateProdutoHandler(IProdutoRepository produtoRepository, IUnityOfWork work, IMapper mapper)
+        public CreateProdutoHandler(IProdutoRepository produtoRepository, IUnityOfWork work)
         {
             _produtoRepository = produtoRepository;
             _work = work;
-            _mapper = mapper;
         }
 
-        public async Task<ReadProdutoResponse> Handle(CreateProdutoRequest request, CancellationToken cancellationToken)
+        public async Task<CreateProdutoResponse> Handle(CreateProdutoRequest request, CancellationToken cancellationToken)
         {
-            var produto = _mapper.Map<Domain.Entities.Produto>(request);
+            var produto = new Domain.Entities.Produto 
+            {
+                CodProduto = new Guid(),
+                Nome = request.Nome,
+                Descricao = request.Descricao,
+                Preco = request.Preco,
+                
+            };
 
             _produtoRepository.Cria(produto);
 
             await _work.Commit(cancellationToken);
 
-            return _mapper.Map<ReadProdutoResponse>(produto);
+            return new CreateProdutoResponse
+            {
+                CodProduto = produto.CodProduto,
+                Nome = produto.Nome,
+                Descricao = produto.Descricao,
+                Preco = produto.Preco,
+                DataCriacao = produto.DataCriacao.ToString("dd/MM/yyyy - HH:mm:ss")
+            };
         }
     }
 }
+
+/*
+ * 
+ * 
+ * 
+ * _mapper.Map<Domain.Entities.Produto>(request);
+ * 
+ * _mapper.Map<ReadProdutoResponse>(produto);
+ * 
+ * 
+ */

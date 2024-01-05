@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace FollowMe.Domain.Entities
@@ -22,5 +24,11 @@ namespace FollowMe.Domain.Entities
         public string? Bairro { get; set; }
         [Required]
         public int Numero { get; set; }
+
+        public Guid UsuarioId { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
+        public virtual Usuario? Usuario { get; set; }
+
     }
 }

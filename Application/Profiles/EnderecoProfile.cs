@@ -16,6 +16,8 @@ namespace FollowMe.Application.Profiles
         {
             CreateMap<CreateEnderecoRequest, Endereco>();
             CreateMap<Endereco, CreateEnderecoResponse>();
+            CreateMap<Endereco, ReadEnderecoResponse>();
+            CreateMap<ReadEnderecoResponse, Endereco>();
         }
     }
 }

@@ -14,5 +14,6 @@ namespace FollowMe.Application.UseCases.Pedido.Responses
         public string? CodRastreio { get; set; }
         public StatusPedido Status { get; set; }
         public Guid UsuarioId { get; set; }
+        public Guid EnderecoId { get; set; }
     }
 }

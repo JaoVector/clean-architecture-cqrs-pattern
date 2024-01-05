@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FollowMe.Application.UseCases.Endereco.Responses;
 using FollowMe.Application.UseCases.Usuario.Commands;
 using FollowMe.Application.UseCases.Usuario.Responses;
 using FollowMe.Domain.Entities;
@@ -14,8 +15,21 @@ namespace FollowMe.Application.Profiles
     {
         public UsuarioProfile()
         {
-            CreateMap<CreateUserRequest, Usuario>();
-            CreateMap<Usuario, CreateUserResponse>().ForMember(x => x.Endereco, opt => opt.MapFrom(x => x.Endereco));
+            
+
         }
     }
 }
+/*
+
+CreateMap<Usuario, ReadUserResponse>()
+                .ForMember(x => x.Endereco, opt => opt.MapFrom(x => x.Endereco));
+
+
+CreateMap<CreateUserRequest, Usuario>();
+            CreateMap<Usuario, CreateUserResponse>();
+            CreateMap<Usuario, ReadUserResponse>()
+                .ForMember(x => x.Endereco, opt => opt.MapFrom(x => x.Endereco))
+                .ForMember(x => x.Produtos, opt => opt.MapFrom(x => x.Produtos));
+            CreateMap<Usuario, ReadAllUserResponse>();
+*/

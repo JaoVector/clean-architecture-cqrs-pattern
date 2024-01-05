@@ -11,5 +11,5 @@ using System.Threading.Tasks;
 
 namespace FollowMe.Application.UseCases.Usuario.Commands
 {
-    public sealed record CreateUserRequest(string Nome, string Email, Guid EnderecoId) : IRequest<CreateUserResponse>;
+    public sealed record CreateUserRequest(string Nome, string Email) : IRequest<CreateUserResponse>;
 }

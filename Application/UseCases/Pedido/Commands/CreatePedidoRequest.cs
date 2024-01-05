@@ -1,12 +1,15 @@
 ﻿using FollowMe.Application.UseCases.Pedido.Responses;
+using FollowMe.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FollowMe.Application.UseCases.Pedido.Commands
 {
-    public sealed record CreatePedidoRequest(Guid UsuarioId) : IRequest<CreatePedidoResponse>;
+    public sealed record CreatePedidoRequest : IRequest<CreatePedidoResponse> 
+    {
+        public Guid UsuarioId { get; set; }
+
+        public Guid EnderecoId { get; set; }
+        
+        public Guid CarrinhoId { get; set; }
+    }
 }

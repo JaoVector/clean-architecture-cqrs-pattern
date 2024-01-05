@@ -40,6 +40,7 @@ namespace FollowMe.Persistence.Repositories
             try
             {
                 entity.DataAtualizacao = DateTimeOffset.Now;
+                //appDbContext.Set<T>().Entry(entity).State = EntityState.Modified;
                 appDbContext.Set<T>().Update(entity);
             }
             catch (Exception)
@@ -67,7 +68,7 @@ namespace FollowMe.Persistence.Repositories
         {
             try
             {
-                return await appDbContext.Set<T>().AsNoTracking().FirstOrDefaultAsync(expression, cancellationToken);
+                return await appDbContext.Set<T>().AsNoTracking().SingleOrDefaultAsync(expression, cancellationToken);
             }
             catch (Exception)
             {
@@ -76,11 +77,11 @@ namespace FollowMe.Persistence.Repositories
             }
         }
 
-        public async Task<List<T>> ConsultaTodos(int take, int skip, CancellationToken cancellationToken)
+        public async Task<List<T>> ConsultaTodos(int skip, int take, CancellationToken cancellationToken)
         {
             try
             {
-                return await appDbContext.Set<T>().AsNoTracking().Take(take).Skip(skip).ToListAsync(cancellationToken);
+                return await appDbContext.Set<T>().AsNoTracking().Skip(skip).Take(take).ToListAsync(cancellationToken);
             }
             catch (Exception)
             {

@@ -14,6 +14,6 @@ namespace FollowMe.Application.UseCases.Usuario.Responses
         public Guid UsuarioId { get; set; }
         public string? Nome { get; set; }
         public string? Email { get; set; }
-        public ReadEnderecoResponse? Endereco { get; set; }
+        public string? DataCriacao { get; set; }
     }
 }

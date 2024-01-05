@@ -22,6 +22,32 @@ namespace FollowMe.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("FollowMe.Domain.Entities.Carrinho", b =>
+                {
+                    b.Property<Guid>("CarrinhoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("DataAtualizacao")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("DataCriacao")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("DataExclusao")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CarrinhoId");
+
+                    b.HasIndex("UsuarioId")
+                        .IsUnique();
+
+                    b.ToTable("Carrinho");
+                });
+
             modelBuilder.Entity("FollowMe.Domain.Entities.Endereco", b =>
                 {
                     b.Property<Guid>("EnderecoId")
@@ -55,9 +81,71 @@ namespace FollowMe.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("EnderecoId");
 
+                    b.HasIndex("UsuarioId");
+
                     b.ToTable("Enderecos");
+                });
+
+            modelBuilder.Entity("FollowMe.Domain.Entities.ItemCarrinho", b =>
+                {
+                    b.Property<Guid>("ItemCarrinhoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CarrinhoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CodProduto")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("DataAtualizacao")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("DataCriacao")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("DataExclusao")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemCarrinhoId");
+
+                    b.HasIndex("CarrinhoId");
+
+                    b.HasIndex("CodProduto");
+
+                    b.ToTable("ItemCarrinho");
+                });
+
+            modelBuilder.Entity("FollowMe.Domain.Entities.ItemPedido", b =>
+                {
+                    b.Property<Guid>("ItemPedidoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CodProduto")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PedidoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemPedidoId");
+
+                    b.HasIndex("CodProduto");
+
+                    b.HasIndex("PedidoId");
+
+                    b.ToTable("ItensPedido");
                 });
 
             modelBuilder.Entity("FollowMe.Domain.Entities.Pedido", b =>
@@ -79,6 +167,9 @@ namespace FollowMe.Persistence.Migrations
                     b.Property<DateTimeOffset?>("DataExclusao")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<Guid>("EnderecoId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -86,6 +177,8 @@ namespace FollowMe.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CodPedido");
+
+                    b.HasIndex("EnderecoId");
 
                     b.HasIndex("UsuarioId");
 
@@ -120,15 +213,7 @@ namespace FollowMe.Persistence.Migrations
                     b.Property<double>("Preco")
                         .HasColumnType("float");
 
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("CodProduto");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Produtos");
                 });
@@ -153,9 +238,6 @@ namespace FollowMe.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid>("EnderecoId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -163,34 +245,70 @@ namespace FollowMe.Persistence.Migrations
 
                     b.HasKey("UsuarioId");
 
-                    b.HasIndex("EnderecoId");
-
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("FollowMe.Domain.Entities.Pedido", b =>
+            modelBuilder.Entity("FollowMe.Domain.Entities.Carrinho", b =>
                 {
                     b.HasOne("FollowMe.Domain.Entities.Usuario", "Usuario")
+                        .WithOne("Carrinho")
+                        .HasForeignKey("FollowMe.Domain.Entities.Carrinho", "UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("FollowMe.Domain.Entities.Endereco", b =>
+                {
+                    b.HasOne("FollowMe.Domain.Entities.Usuario", "Usuario")
+                        .WithMany("Enderecos")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("FollowMe.Domain.Entities.ItemCarrinho", b =>
+                {
+                    b.HasOne("FollowMe.Domain.Entities.Carrinho", "Carrinho")
+                        .WithMany("Items")
+                        .HasForeignKey("CarrinhoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FollowMe.Domain.Entities.Produto", "Produto")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("CodProduto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Carrinho");
+
+                    b.Navigation("Produto");
                 });
 
-            modelBuilder.Entity("FollowMe.Domain.Entities.Produto", b =>
+            modelBuilder.Entity("FollowMe.Domain.Entities.ItemPedido", b =>
                 {
-                    b.HasOne("FollowMe.Domain.Entities.Usuario", "Usuario")
-                        .WithMany("Produtos")
-                        .HasForeignKey("UsuarioId")
+                    b.HasOne("FollowMe.Domain.Entities.Produto", "Produto")
+                        .WithMany()
+                        .HasForeignKey("CodProduto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.HasOne("FollowMe.Domain.Entities.Pedido", "Pedido")
+                        .WithMany("ItensPedido")
+                        .HasForeignKey("PedidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pedido");
+
+                    b.Navigation("Produto");
                 });
 
-            modelBuilder.Entity("FollowMe.Domain.Entities.Usuario", b =>
+            modelBuilder.Entity("FollowMe.Domain.Entities.Pedido", b =>
                 {
                     b.HasOne("FollowMe.Domain.Entities.Endereco", "Endereco")
                         .WithMany()
@@ -198,12 +316,32 @@ namespace FollowMe.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FollowMe.Domain.Entities.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Endereco");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("FollowMe.Domain.Entities.Carrinho", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("FollowMe.Domain.Entities.Pedido", b =>
+                {
+                    b.Navigation("ItensPedido");
                 });
 
             modelBuilder.Entity("FollowMe.Domain.Entities.Usuario", b =>
                 {
-                    b.Navigation("Produtos");
+                    b.Navigation("Carrinho");
+
+                    b.Navigation("Enderecos");
                 });
 #pragma warning restore 612, 618
         }

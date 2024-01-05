@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace FollowMe.Persistence.Messaging
 {
+    /*
     public class RabbitMQService : IMessageBusService
     {
         private readonly IConnection _connection;
@@ -38,4 +39,5 @@ namespace FollowMe.Persistence.Messaging
             _channel.BasicPublish(_exchange, routingKey, null, bytes);
         }
     }
+    */
 }

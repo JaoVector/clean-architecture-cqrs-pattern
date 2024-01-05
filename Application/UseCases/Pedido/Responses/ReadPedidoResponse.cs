@@ -1,4 +1,6 @@
-﻿using FollowMe.Domain.Enums;
+﻿using FollowMe.Application.UseCases.Endereco.Responses;
+using FollowMe.Application.UseCases.Usuario.Responses;
+using FollowMe.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,9 @@ namespace FollowMe.Application.UseCases.Pedido.Responses
         public Guid CodPedido { get; set; }
         public string? CodRastreio { get; set; }
         public StatusPedido Status { get; set; }
-        public Guid UsuarioId { get; set; }
+        public ReadUserPedidoResponse? Usuario { get; set; }
+        public ReadEnderecoResponse? Endereco { get; set; }
+        public ICollection<ItemPedidoResponse>? ItensPedido { get; set; }
+
     }
 }

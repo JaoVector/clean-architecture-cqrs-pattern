@@ -10,12 +10,10 @@ using System.Threading.Tasks;
 
 namespace FollowMe.Application.UseCases.Produto.Commands
 {
-    public sealed record CreateProdutoRequest : IRequest<ReadProdutoResponse>
+    public sealed record CreateProdutoRequest : IRequest<CreateProdutoResponse>
     {
         public string? Nome { get; set; }
         public string? Descricao { get; set; }
         public double Preco { get; set; }
-        public int Quantidade { get; set; }
-        public Guid UsuarioId { get; set; }
     }
 }
