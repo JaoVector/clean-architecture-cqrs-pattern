@@ -1,12 +1,8 @@
-﻿using FollowMe.Application.UseCases.Endereco.Commands;
+﻿using FollowMe.Application.Shared.Exceptions;
+using FollowMe.Application.UseCases.Endereco.Commands;
 using FollowMe.Application.UseCases.Endereco.Responses;
 using FollowMe.Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FollowMe.Application.UseCases.Endereco.CommandHandlers
 {
@@ -25,7 +21,7 @@ namespace FollowMe.Application.UseCases.Endereco.CommandHandlers
         {
             var endereco = await _enderecoRepo.ConsultaEnderecoPorId(request.EnderecoId, cancellationToken);
 
-            if (endereco is null) return default;
+            if (endereco is null) throw new EnderecoNotFound($"Endereco de Id {request.EnderecoId} não Encontrado");
 
             _enderecoRepo.Exclui(endereco);
 

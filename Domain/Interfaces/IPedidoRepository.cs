@@ -12,6 +12,7 @@ namespace FollowMe.Domain.Interfaces
          Task<Pedido> AtualizaStatusPedido(Guid id, CancellationToken cancellation);
          Pedido CriaPedido(Guid UsuarioId, Guid EnderecoId, Guid CarrinhoId, CancellationToken cancellation);
          Task<Pedido?> ConsultaPedidoPorId(Guid id, CancellationToken cancellation);
+         void PedidoExcluido(Pedido pedido);
          string GeraCodRatreio();
     }
 }

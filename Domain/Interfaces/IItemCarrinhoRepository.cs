@@ -9,6 +9,6 @@ namespace FollowMe.Domain.Interfaces
 {
     public interface IItemCarrinhoRepository : IBaseRepository<ItemCarrinho>
     {
-        
+        void ItemAdicionadoNoCarrinho(ItemCarrinho itemCarrinho);  
     }
 }

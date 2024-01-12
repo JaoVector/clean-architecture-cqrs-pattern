@@ -39,29 +39,3 @@ namespace FollowMe.API.Controllers
        
     }
 }
-/*
- * 
- * 
- *  [HttpPost]
-        public async Task<ActionResult<>> AdcionaItem() 
-        {
-
-        }
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- *    [HttpPost]
-        public async Task<ActionResult<AddItemCarrinhoResponse>> AdicionaItem(AddItemCarrinhoRequest request, CancellationToken cancellation) 
-        {
-
-      
-           // var resp = await _mediator.Send(request, cancellation);
-
-//            return Ok(resp);
-        }
- * 
- */

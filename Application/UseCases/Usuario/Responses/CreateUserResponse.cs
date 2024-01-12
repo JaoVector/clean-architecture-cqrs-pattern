@@ -1,13 +1,4 @@
-﻿using FollowMe.Application.UseCases.Endereco.Responses;
-using FollowMe.Application.UseCases.Produto.Responses;
-using FollowMe.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FollowMe.Application.UseCases.Usuario.Responses
+﻿namespace FollowMe.Application.UseCases.Usuario.Responses
 {
     public sealed record CreateUserResponse
     {

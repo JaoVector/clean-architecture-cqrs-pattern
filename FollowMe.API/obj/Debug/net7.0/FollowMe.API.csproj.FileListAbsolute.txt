@@ -11,9 +11,6 @@ D:\C#_Projetos\FollowMe\FollowMe.API\bin\Debug\net7.0\FollowMe.API.deps.json
 D:\C#_Projetos\FollowMe\FollowMe.API\bin\Debug\net7.0\FollowMe.API.runtimeconfig.json
 D:\C#_Projetos\FollowMe\FollowMe.API\bin\Debug\net7.0\FollowMe.API.dll
 D:\C#_Projetos\FollowMe\FollowMe.API\bin\Debug\net7.0\FollowMe.API.pdb
-D:\C#_Projetos\FollowMe\FollowMe.API\bin\Debug\net7.0\AutoMapper.dll
-D:\C#_Projetos\FollowMe\FollowMe.API\bin\Debug\net7.0\AutoMapper.Extensions.ExpressionMapping.dll
-D:\C#_Projetos\FollowMe\FollowMe.API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\C#_Projetos\FollowMe\FollowMe.API\bin\Debug\net7.0\Azure.Core.dll
 D:\C#_Projetos\FollowMe\FollowMe.API\bin\Debug\net7.0\Azure.Identity.dll
 D:\C#_Projetos\FollowMe\FollowMe.API\bin\Debug\net7.0\FluentValidation.dll

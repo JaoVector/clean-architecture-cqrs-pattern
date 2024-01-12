@@ -1,10 +1,6 @@
-﻿using MassTransit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using FollowMe.Application.Shared.Exceptions;
+using MassTransit;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace FollowMe.Persistence.Messaging
 {
@@ -12,19 +8,27 @@ namespace FollowMe.Persistence.Messaging
     {
         public async static void Publica(IBusControl bus, object payload, string routingKey) 
         {
-            var options = new JsonSerializerOptions { WriteIndented = true };
-
-            string jsonPayload = JsonSerializer.Serialize(payload, options);
-
-            File.WriteAllText("testeJsonPedido.json", jsonPayload);
-
-            var message = new SendMessage
+            try
             {
-                RoutingKey = "pedido",
-                Payload = jsonPayload
-            };
+                var options = new JsonSerializerOptions { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
 
-            await bus.Publish<ISendMessage>(message);
+                string jsonPayload = JsonSerializer.Serialize(payload, options);
+
+                File.WriteAllText("testeJsonPedido.json", jsonPayload);
+
+                var message = new SendMessage
+                {
+                    RoutingKey = routingKey,
+                    Payload = jsonPayload
+                };
+
+                await bus.Publish<ISendMessage>(message);
+            }
+            catch (Exception ex)
+            {
+
+                throw new MessageExceptions($"Erro ao Publicar as Mensagens no RabbitMQ {ex}");
+            }
         }
     }
 }

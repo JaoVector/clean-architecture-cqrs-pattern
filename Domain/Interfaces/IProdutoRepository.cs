@@ -4,5 +4,6 @@ namespace FollowMe.Domain.Interfaces
 {
     public interface IProdutoRepository : IBaseRepository<Produto>
     {
+        void ExcluiProduto(Produto Produto);
     }
 }

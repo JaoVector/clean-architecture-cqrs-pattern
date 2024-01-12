@@ -1,13 +1,4 @@
-﻿using FollowMe.Application.UseCases.Usuario.Responses;
-using FollowMe.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FollowMe.Application.UseCases.Endereco.Responses
+﻿namespace FollowMe.Application.UseCases.Endereco.Responses
 {
     public sealed record ReadEnderecoResponse
     {

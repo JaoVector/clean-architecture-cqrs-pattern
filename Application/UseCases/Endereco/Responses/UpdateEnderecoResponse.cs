@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FollowMe.Application.UseCases.Endereco.Responses
+﻿namespace FollowMe.Application.UseCases.Endereco.Responses
 {
     public sealed record UpdateEnderecoResponse
     {

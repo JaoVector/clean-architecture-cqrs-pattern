@@ -1,11 +1,4 @@
-﻿using FollowMe.Application.UseCases.Produto.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FollowMe.Application.UseCases.Carrinho.Responses
+﻿namespace FollowMe.Application.UseCases.Carrinho.Responses
 {
     public sealed record CreateCarrinhoResponse
     {

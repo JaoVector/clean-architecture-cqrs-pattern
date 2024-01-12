@@ -1,12 +1,8 @@
-﻿using FollowMe.Application.UseCases.ItemCarrinho.Commands;
+﻿using FollowMe.Application.Shared.Exceptions;
+using FollowMe.Application.UseCases.ItemCarrinho.Commands;
 using FollowMe.Application.UseCases.ItemCarrinho.Responses;
 using FollowMe.Domain.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FollowMe.Application.UseCases.ItemCarrinho.CommandHandlers
 {
@@ -24,6 +20,8 @@ namespace FollowMe.Application.UseCases.ItemCarrinho.CommandHandlers
         public async Task<DeleteItemCarrinhoResponse> Handle(DeleteItemCarrinhoRequest request, CancellationToken cancellationToken)
         {
             var item = await _itemCarrinhoRepository.Consulta(x => x.ItemCarrinhoId == request.ItemCarrinhoId, cancellationToken);
+
+            if (item is null) throw new NotFoundExceptions($"ItemCarrinho de Id {request.ItemCarrinhoId} não Encontrado");
 
             _itemCarrinhoRepository.Exclui(item);
 

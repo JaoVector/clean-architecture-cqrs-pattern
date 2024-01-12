@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using FollowMe.Application.Shared.Exceptions;
 using FollowMe.Application.UseCases.Usuario.Queries;
 using FollowMe.Application.UseCases.Usuario.Responses;
 using FollowMe.Domain.Interfaces;
@@ -10,7 +10,7 @@ namespace FollowMe.Application.UseCases.Usuario.QueryHandlers
     {
         private readonly IUsuarioRepository _usuarioRepo;
        
-        public ConsultaTodosUsuariosHandler(IUsuarioRepository usuario, IMapper mapper)
+        public ConsultaTodosUsuariosHandler(IUsuarioRepository usuario)
         {
             _usuarioRepo = usuario;
         }
@@ -19,6 +19,8 @@ namespace FollowMe.Application.UseCases.Usuario.QueryHandlers
         {
 
             var usuarios = await _usuarioRepo.ConsultaTodos(request.skip, request.take, cancellationToken);
+
+            if (usuarios is null) throw new UsuarioNotFound($"Usuarios não Encontrados");
 
             return (from u in usuarios select new ReadAllUserResponse 
             { 

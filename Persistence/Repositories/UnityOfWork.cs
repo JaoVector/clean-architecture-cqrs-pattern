@@ -1,4 +1,5 @@
-﻿using FollowMe.Domain.Interfaces;
+﻿using FollowMe.Application.Shared.Exceptions;
+using FollowMe.Domain.Interfaces;
 using FollowMe.Persistence.Context;
 
 namespace FollowMe.Persistence.Repositories
@@ -15,7 +16,16 @@ namespace FollowMe.Persistence.Repositories
 
         public async Task Commit(CancellationToken cancellationToken)
         {
-            await _contex.SaveChangesAsync(cancellationToken);
+            try
+            {
+                await _contex.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+
+                throw new ErroNoBanco($"Erro ao salvar dados no Banco {ex}");
+            }
+            
         }
     }
 }

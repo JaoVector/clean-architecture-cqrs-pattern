@@ -1,5 +1,6 @@
 ﻿using FollowMe.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace FollowMe.Persistence.Context
 {
@@ -55,8 +56,12 @@ namespace FollowMe.Persistence.Context
                 .WithMany(p => p.ItensPedido)
                 .HasForeignKey(pe => pe.PedidoId);
 
-
             base.OnModelCreating(model);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FollowMe.Application.UseCases.Endereco.Commands;
+﻿using FollowMe.Application.UseCases.Endereco.Commands;
 using FollowMe.Application.UseCases.Endereco.Responses;
 using FollowMe.Domain.Interfaces;
 using MediatR;
@@ -11,13 +10,11 @@ namespace FollowMe.Application.UseCases.Endereco.CommandHandlers
 
         private readonly IEnderecoRepository _enderecoRepository;
         private readonly IUnityOfWork _work;
-        private readonly IMapper _mapper;
 
-        public CreateEnderecoHandler(IEnderecoRepository enderecoRepository, IUnityOfWork work, IMapper mapper)
+        public CreateEnderecoHandler(IEnderecoRepository enderecoRepository, IUnityOfWork work)
         {
             _enderecoRepository = enderecoRepository;
             _work = work;
-            _mapper = mapper;
         }
 
         public async Task<CreateEnderecoResponse> Handle(CreateEnderecoRequest request, CancellationToken cancellationToken)

@@ -1,4 +1,5 @@
-﻿using FollowMe.Application.Shared.Extensions;
+﻿using FollowMe.Application.Shared.Exceptions;
+using FollowMe.Application.Shared.Extensions;
 using FollowMe.Application.UseCases.Usuario.Requests;
 using FollowMe.Application.UseCases.Usuario.Responses;
 using FollowMe.Domain.Interfaces;
@@ -23,14 +24,16 @@ namespace FollowMe.Application.UseCases.Usuario.CommandHandlers
 
             var usuario = await _usuarioRepo.ConsultaUsuarioPorId(request.UsuarioId, cancellationToken);
 
-            if (usuario is null) return default;
+            if (usuario is null) throw new UsuarioNotFound($"Usuario de Id {request.UsuarioId} não Encontrado");
 
             usuario.AtualizaUsuario(request);
             
             _usuarioRepo.Atualiza(usuario);
 
             await _work.Commit(cancellationToken);
-            
+
+            _usuarioRepo.UsuarioAtualizado(usuario);
+
             return new UpdateUserResponse 
             {
                 UsuarioId = usuario.UsuarioId,

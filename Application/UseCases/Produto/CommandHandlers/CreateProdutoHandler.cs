@@ -43,14 +43,3 @@ namespace FollowMe.Application.UseCases.Produto.CommandHandlers
         }
     }
 }
-
-/*
- * 
- * 
- * 
- * _mapper.Map<Domain.Entities.Produto>(request);
- * 
- * _mapper.Map<ReadProdutoResponse>(produto);
- * 
- * 
- */

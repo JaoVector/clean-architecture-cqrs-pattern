@@ -1,4 +1,4 @@
-﻿using FollowMe.Application.UseCases.Endereco.Responses;
+﻿using FollowMe.Application.Shared.Exceptions;
 using FollowMe.Application.UseCases.Usuario.Commands;
 using FollowMe.Application.UseCases.Usuario.Responses;
 using FollowMe.Domain.Interfaces;
@@ -21,9 +21,13 @@ namespace FollowMe.Application.UseCases.Usuario.CommandHandlers
         {
             var usuario = await _usuarioRepo.ConsultaUsuarioPorId(request.UsuarioId, cancellationToken);
 
+            if (usuario is null) throw new UsuarioNotFound($"Usuario de Id {request.UsuarioId} não Encontrado");
+
             _usuarioRepo.Exclui(usuario);
 
             await _work.Commit(cancellationToken);
+
+            _usuarioRepo.UsuarioExcluido(usuario);
 
             return new ReadAllUserResponse 
             {

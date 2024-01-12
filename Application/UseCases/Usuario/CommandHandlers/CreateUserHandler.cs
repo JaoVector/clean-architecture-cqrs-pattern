@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FollowMe.Application.UseCases.Usuario.Commands;
+﻿using FollowMe.Application.UseCases.Usuario.Commands;
 using FollowMe.Application.UseCases.Usuario.Responses;
 using FollowMe.Domain.Interfaces;
 using MediatR;
@@ -27,6 +26,8 @@ namespace FollowMe.Application.UseCases.Usuario.CommandHandlers
             };
 
             _userRepository.Cria(user);
+
+            _userRepository.PublicaUsuario(user);
 
             await _unitOfWork.Commit(cancellationToken);
 

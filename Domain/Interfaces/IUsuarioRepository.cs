@@ -11,5 +11,8 @@ namespace FollowMe.Domain.Interfaces
     public interface IUsuarioRepository : IBaseRepository<Usuario>
     {
         Task<Usuario?> ConsultaUsuarioPorId(Guid id, CancellationToken cancellationToken);
+        void PublicaUsuario(Usuario usuario);
+        void UsuarioAtualizado(Usuario usuario);
+        void UsuarioExcluido(Usuario usuario);
     }
 }

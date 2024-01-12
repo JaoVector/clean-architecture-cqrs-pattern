@@ -1,6 +1,5 @@
 ﻿using FollowMe.Application.UseCases.Carrinho.Responses;
 using FollowMe.Application.UseCases.Endereco.Responses;
-using FollowMe.Application.UseCases.Produto.Responses;
 
 namespace FollowMe.Application.UseCases.Usuario.Responses
 {

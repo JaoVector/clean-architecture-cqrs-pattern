@@ -1,4 +1,5 @@
-﻿using FollowMe.Domain.Entities;
+﻿using FollowMe.Application.Shared.Exceptions;
+using FollowMe.Domain.Entities;
 using FollowMe.Domain.Enums;
 using FollowMe.Domain.Interfaces;
 using FollowMe.Persistence.Context;
@@ -39,9 +40,16 @@ namespace FollowMe.Persistence.Repositories
 
                 pedido.Status = status;
 
-                _appDbContext.Update(pedido);
+                if(pedido.Status == StatusPedido.Excluido) 
+                {
+                    _appDbContext.Pedidos.Remove(pedido);
+                }
+                else
+                {
+                    _appDbContext.Pedidos.Update(pedido);
 
-                PublicaMensagemPedidos.PublicaStatusPedido(_bus, pedido);
+                    PublicaMensagensPedidos.PublicaStatusPedido(_bus, pedido);
+                }
 
                 return pedido;
 
@@ -50,14 +58,16 @@ namespace FollowMe.Persistence.Repositories
             catch (Exception)
             {
 
-                throw;
+                throw new BadRequestException($"Erro ao Atualizar Status do Pedido");
             }
             
         }
 
         public async Task<Pedido?> ConsultaPedidoPorId(Guid id, CancellationToken cancellation)
         {
-            var query = await _appDbContext.Pedidos
+            try
+            {
+                var query = await _appDbContext.Pedidos
                         .Where(p => p.CodPedido == id)
                         .Include(u => u.Usuario)
                         .Include(e => e.Endereco)
@@ -65,55 +75,74 @@ namespace FollowMe.Persistence.Repositories
                             .ThenInclude(p => p.Produto)
                         .FirstOrDefaultAsync(cancellation);
 
-            return query;
+                return query;
+            }
+            catch (Exception ex)
+            {
+
+                throw new ErroNoBanco($"Ocorreu um erro na consulta do Pedido {ex}");
+            }
+            
         }
 
         public Pedido CriaPedido(Guid UsuarioId, Guid EnderecoId, Guid CarrinhoId, CancellationToken cancellation)
         {
-
-            var pedido = new Pedido
+            try
             {
-                CodPedido = new Guid(),
-                UsuarioId = UsuarioId,
-                EnderecoId = EnderecoId,
-            };
-
-            pedido.CodRastreio = GeraCodRatreio();
-
-            _appDbContext.Pedidos.Add(pedido);
-
-            var itens = _appDbContext.ItemCarrinho
-                                .Where(it => it.CarrinhoId == CarrinhoId)
-                                .AsNoTracking()
-                                .Select(x => new
-                                {
-                                    x.Quantidade,
-                                    x.CodProduto
-                                });
-
-            foreach (var item in itens)
-            {
-                var itemPedido = new ItemPedido
+                var pedido = new Pedido
                 {
-                    ItemPedidoId = new Guid(),
-                    PedidoId = pedido.CodPedido,
-                    CodProduto = item.CodProduto,
-                    Quantidade = item.Quantidade,
+                    CodPedido = new Guid(),
+                    UsuarioId = UsuarioId,
+                    EnderecoId = EnderecoId,
                 };
 
-                _appDbContext.ItensPedido.Add(itemPedido);
+                pedido.CodRastreio = GeraCodRatreio();
 
+                _appDbContext.Pedidos.Add(pedido);
+
+                var itens = _appDbContext.ItemCarrinho
+                                    .Where(it => it.CarrinhoId == CarrinhoId)
+                                    .AsNoTracking()
+                                    .Select(x => new
+                                    {
+                                        x.Quantidade,
+                                        x.CodProduto
+                                    });
+
+                foreach (var item in itens)
+                {
+                    var itemPedido = new ItemPedido
+                    {
+                        ItemPedidoId = new Guid(),
+                        PedidoId = pedido.CodPedido,
+                        CodProduto = item.CodProduto,
+                        Quantidade = item.Quantidade,
+                    };
+
+                    _appDbContext.ItensPedido.Add(itemPedido);
+
+                }
+
+                ExcluiItensCarrinho(CarrinhoId);
+
+                pedido.Usuario = _appDbContext.Usuarios.FirstOrDefault(u => u.UsuarioId == UsuarioId);
+
+                PublicaMensagensPedidos.PublicaPedido(_bus, pedido);
+
+                return pedido;
             }
+            catch (Exception ex)
+            {
 
-            ExcluiItensCarrinho(CarrinhoId);
-
-            PublicaMensagemPedidos.PublicaPedido(_bus, pedido);
-
-            return pedido;
-
+                throw new BadRequestException($"Erro ao Criar Pedido {ex}");
+            }
         }
 
-        
+        public void PedidoExcluido(Pedido pedido)
+        {
+            PublicaMensagensPedidos.PedidoExcluido(_bus, pedido);
+        }
+
         public string GeraCodRatreio()
         {
             string caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -144,89 +173,7 @@ namespace FollowMe.Persistence.Repositories
 
             _appDbContext.ItemCarrinho.RemoveRange(itensCarrinho);
         }
-  
+
+        
     }
 }
-
-/*
- *  switch (pedido.Status)
-            {
-                case StatusPedido.Feito:
-                    pedido.Status = StatusPedido.Enviado;
-                    break;
-                case StatusPedido.Enviado:
-                    pedido.Status = StatusPedido.SaiuParaEntrega;
-                    break;
-                case StatusPedido.SaiuParaEntrega:
-                    pedido.Status = StatusPedido.Entregue;
-                    break;
-                case StatusPedido.Entregue:
-                    pedido.Status = StatusPedido.Concluido;
-                    break;
-                default:
-                    pedido.Status = StatusPedido.Excluido;
-                    break;
-            }
- *
- *
- *
- *
- *var itens = _appDbContext.ItemCarrinho
-                                .Where(it => it.CarrinhoId == CarrinhoId)
-                                .AsNoTracking()
-                                .Select(x => new
-                                {
-                                    x.Quantidade,
-                                    x.CodProduto
-                                });
-
-            foreach (var item in itens)
-            {
-                var itemPedido = new ItemPedido
-                {
-                    ItemPedidoId = new Guid(),
-                    PedidoId = pedido.CodPedido,
-                    CodProduto = item.CodProduto,
-                    Quantidade = item.Quantidade,
-                };
-
-                _appDbContext.ItensPedido.Add(itemPedido);
-                
-            }
- *
- *
- *
- *
- *
- *
- *.Select(p => new Pedido 
-                        {
-                            CodPedido= p.CodPedido,
-                            CodRastreio = p.CodRastreio,
-                            Usuario = _appDbContext.Usuarios
-                                        .FirstOrDefault(u => u.UsuarioId == p.UsuarioId),
-
-                            Endereco = _appDbContext.Enderecos
-                                       .FirstOrDefault(e => e.EnderecoId == p.EnderecoId),
-
-                            ItensPedido = p.ItensPedido
-                                    .Select(i => new ItemPedido 
-                                    {
-                                        ItemPedidoId = i.ItemPedidoId,
-                                        Produto = new Produto
-                                        {
-                                            CodProduto = i.Produto.CodProduto,
-                                            Nome = i.Produto.Nome,
-                                            Descricao = i.Produto.Descricao,
-                                            Preco = i.Produto.Preco,
-
-                                        },
-                                        Quantidade= i.Quantidade
-
-                                    }).ToList(),
-
-                        })
- *
- *
- *
- */

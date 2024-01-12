@@ -1,4 +1,5 @@
-﻿using FollowMe.Application.UseCases.Endereco.Responses;
+﻿using FollowMe.Application.Shared.Exceptions;
+using FollowMe.Application.UseCases.Endereco.Responses;
 using FollowMe.Application.UseCases.Pedido.Queries;
 using FollowMe.Application.UseCases.Pedido.Responses;
 using FollowMe.Application.UseCases.Produto.Responses;
@@ -21,7 +22,7 @@ namespace FollowMe.Application.UseCases.Pedido.QueryHandlers
         {
             var pedido = await _pedidoRepo.ConsultaPedidoPorId(request.PedidoId, cancellationToken);
 
-            if (pedido is null) return default;
+            if (pedido is null) throw new PedidoNotFound($"Pedido de Id {request.PedidoId} não Encontrado");
 
             return new ReadPedidoResponse 
             {

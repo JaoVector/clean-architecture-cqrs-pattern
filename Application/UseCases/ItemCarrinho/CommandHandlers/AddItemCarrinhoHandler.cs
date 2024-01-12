@@ -32,6 +32,8 @@ namespace FollowMe.Application.UseCases.ItemCarrinho.CommandHandlers
 
              await _work.Commit(cancellationToken);
 
+            _itemCarrinhoRepository.ItemAdicionadoNoCarrinho(item);
+
             return new AddItemCarrinhoResponse
             {
                 ItemCarrinhoId= item.ItemCarrinhoId,

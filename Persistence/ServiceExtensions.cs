@@ -6,8 +6,6 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Text.Json.Serialization;
-using RabbitMQ.Client;
 
 namespace FollowMe.Persistence
 {
@@ -45,17 +43,7 @@ namespace FollowMe.Persistence
                 });
             });       
            
-            //services.AddMassTransitHostedService();
-        }
-        /*
-        public static void AddBus(this IServiceCollection services, IConfiguration configuration)
-        {
             
         }
-        */
     }
 }
-/*
- * services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("SQLConnection"), 
-                b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)), ServiceLifetime.Transient);
- */

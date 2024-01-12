@@ -45,5 +45,17 @@ namespace FollowMe.API.Controllers
 
             return Ok(reponse);
         }
+
+        [HttpDelete("{PedidoId}")]
+        public async Task<ActionResult<DeletePedidoResponse>> DeletaPedido(Guid? PedidoId, CancellationToken cancellationToken) 
+        {
+            if (PedidoId is null) return BadRequest("O Id precisa estar preenchido");
+
+            var request = new DeletePedidoRequest(PedidoId.Value);
+
+            var response = await _mediator.Send(request, cancellationToken);
+
+            return Ok(response);
+        }
     }
 }

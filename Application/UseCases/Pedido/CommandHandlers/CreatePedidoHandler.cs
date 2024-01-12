@@ -18,11 +18,8 @@ namespace FollowMe.Application.UseCases.Pedido.CommandHandlers
 
         public async Task<CreatePedidoResponse> Handle(CreatePedidoRequest request, CancellationToken cancellationToken)
         {
-            //var pedido = _mapper.Map<Domain.Entities.Pedido>(request);
-
+           
             var pedido = _pedidoRepo.CriaPedido(request.UsuarioId, request.EnderecoId, request.CarrinhoId, cancellationToken);
-
-           // pedido.CodRastreio = _pedidoRepo.GeraCodRatreio();
 
             await _work.Commit(cancellationToken);
 

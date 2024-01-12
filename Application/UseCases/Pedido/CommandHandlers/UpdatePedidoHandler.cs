@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using FollowMe.Application.Shared.Exceptions;
 using FollowMe.Application.UseCases.Pedido.Commands;
 using FollowMe.Application.UseCases.Pedido.Responses;
 using FollowMe.Domain.Interfaces;
@@ -10,22 +10,26 @@ namespace FollowMe.Application.UseCases.Pedido.CommandHandlers
     {
         private readonly IPedidoRepository _pedidoRepo;
         private readonly IUnityOfWork _work;
-        private readonly IMapper _mapper;
-
-        public UpdatePedidoHandler(IPedidoRepository pedidoRepo, IUnityOfWork work, IMapper mapper)
+        
+        public UpdatePedidoHandler(IPedidoRepository pedidoRepo, IUnityOfWork work)
         {
             _pedidoRepo = pedidoRepo;
             _work = work;
-            _mapper = mapper;
         }
 
         public async Task<UpdateStatusPedidoResponse> Handle(UpdateStatusPedidoRequest request, CancellationToken cancellationToken)
         {
             var pedido = await _pedidoRepo.AtualizaStatusPedido(request.CodPedido, cancellationToken);
-            
+
+            if (pedido is null) throw new PedidoNotFound($"Pedido de Id {request.CodPedido} não Encontrado");
+
             await _work.Commit(cancellationToken);
 
-            return _mapper.Map<UpdateStatusPedidoResponse>(pedido);
+            return new UpdateStatusPedidoResponse 
+            {
+                CodRastreio = pedido.CodRastreio,
+                Status = pedido.Status,
+            };
         }
     }
 }

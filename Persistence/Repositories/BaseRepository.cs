@@ -1,13 +1,9 @@
-﻿using FollowMe.Domain.Entities;
+﻿using FollowMe.Application.Shared.Exceptions;
+using FollowMe.Domain.Entities;
 using FollowMe.Domain.Interfaces;
 using FollowMe.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FollowMe.Persistence.Repositories
 {
@@ -28,10 +24,10 @@ namespace FollowMe.Persistence.Repositories
                 entity.DataCriacao = DateTimeOffset.Now;
                 appDbContext.Set<T>().Add(entity);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw new ErroNoBanco($"Erro ao Salvar Dados no Banco {ex}");
             }
         }
 
@@ -40,13 +36,12 @@ namespace FollowMe.Persistence.Repositories
             try
             {
                 entity.DataAtualizacao = DateTimeOffset.Now;
-                //appDbContext.Set<T>().Entry(entity).State = EntityState.Modified;
                 appDbContext.Set<T>().Update(entity);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw new ErroNoBanco($"Erro ao Atualizar Dados no Banco {ex}");
             }
         }
 
@@ -57,23 +52,19 @@ namespace FollowMe.Persistence.Repositories
                  entity.DataExclusao = DateTimeOffset.Now;
                  appDbContext.Set<T>().Remove(entity);
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            catch (Exception ex) { throw new ErroNoBanco($"Erro ao Excluir Dados do Banco {ex}"); }
         }
 
         public async Task<T> Consulta(Expression<Func<T, bool>> expression, CancellationToken cancellationToken)
         {
             try
             {
-                return await appDbContext.Set<T>().AsNoTracking().SingleOrDefaultAsync(expression, cancellationToken);
+                return await appDbContext.Set<T>().SingleOrDefaultAsync(expression, cancellationToken);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw new NotFoundExceptions($"Erro ao Retornar Valores do Banco {ex}");
             }
         }
 
@@ -83,10 +74,10 @@ namespace FollowMe.Persistence.Repositories
             {
                 return await appDbContext.Set<T>().AsNoTracking().Skip(skip).Take(take).ToListAsync(cancellationToken);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw new NotFoundExceptions($"Erro ao Retornar Valores do Banco {ex}");
             }
         }
     }

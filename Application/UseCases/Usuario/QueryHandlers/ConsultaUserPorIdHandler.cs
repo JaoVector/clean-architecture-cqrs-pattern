@@ -1,4 +1,4 @@
-using AutoMapper;
+using FollowMe.Application.Shared.Exceptions;
 using FollowMe.Application.UseCases.Carrinho.Responses;
 using FollowMe.Application.UseCases.Endereco.Responses;
 using FollowMe.Application.UseCases.ItemCarrinho.Responses;
@@ -15,7 +15,7 @@ namespace Application.UseCases.Usuario.QueryHandlers
 
         private readonly IUsuarioRepository _usuarioRepo;
         
-        public ConsultaUserPorIdHandler(IUsuarioRepository usuario, IMapper mapper)
+        public ConsultaUserPorIdHandler(IUsuarioRepository usuario)
         {
             _usuarioRepo = usuario;
             
@@ -25,7 +25,7 @@ namespace Application.UseCases.Usuario.QueryHandlers
         {
             var usuario = await _usuarioRepo.ConsultaUsuarioPorId(request.UsuarioId, cancellationToken);
             
-            if (usuario is null) return default;
+            if (usuario is null) throw new UsuarioNotFound($"Usuario de Id {request.UsuarioId} não Encontrado");
 
             return new ReadUserResponse
             {
@@ -64,15 +64,3 @@ namespace Application.UseCases.Usuario.QueryHandlers
         }
     }
 }
-
-/*
-                Produtos = (from p in usuario.Produtos select new ReadProdutoResponse
-                {
-                     CodProduto = p.CodProduto,
-                     Nome = p.Nome,
-                     Descricao = p.Descricao,
-                     Preco = p.Preco,
-                     Quantidade = p.Quantidade
-
-                }).ToList()
-                */
