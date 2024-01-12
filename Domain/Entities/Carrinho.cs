@@ -20,9 +20,3 @@ namespace FollowMe.Domain.Entities
     }
 }
 
-/*
- * 
- * [JsonIgnore]
-        [IgnoreDataMember]
- * 
- */

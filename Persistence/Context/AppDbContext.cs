@@ -1,6 +1,5 @@
 ﻿using FollowMe.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace FollowMe.Persistence.Context
 {
@@ -65,49 +64,3 @@ namespace FollowMe.Persistence.Context
         }
     }
 }
-
-/*
- * 
- * 
- *  protected override void OnModelCreating(ModelBuilder modelBuilder) 
-        {
-            modelBuilder.Entity<Carrinho>()
-                .HasKey(car => car.CodProduto);
-                
-        }
- * 
- * 
- * model.Entity<ItemCarrinho>()
-                .HasKey(x => new { x.CarrinhoId, x.CodProduto });
- * 
- * 
- * 
- *   protected override void OnModelCreating(ModelBuilder model) 
-        {
-
-            model.Entity<ItemCarrinho>()
-                .HasKey(x => x.ItemCarrinhoId);
-
-            model.Entity<ItemCarrinho>()
-                .HasKey(x => new { x.CarrinhoId, x.CodProduto });
-
-            model.Entity<Carrinho>()
-                .HasMany(p => p.Items)
-                .WithOne(c => c.Carrinho)
-                .HasForeignKey(c => c.CarrinhoId);
-
-            model.Entity<ItemCarrinho>()
-                .HasOne(p => p.Produto)
-                .WithMany()
-                .HasForeignKey(p => p.CodProduto);
-
-            model.Entity<ItemCarrinho>()
-                .HasOne(c => c.Carrinho)
-                .WithMany(p => p.Items)
-                .HasForeignKey(c => c.CarrinhoId);
-
-            base.OnModelCreating(model);
-        }
- * 
- * 
- */

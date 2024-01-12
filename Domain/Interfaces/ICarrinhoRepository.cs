@@ -10,6 +10,5 @@ namespace FollowMe.Domain.Interfaces
     public interface ICarrinhoRepository : IBaseRepository<Carrinho>
     {
         Task<Carrinho?> ConsultaCarrinho(Guid CarrinhoId);
-        //void AdicionaProdutoNoCarrinho(Guid CarrinhoId, Guid CodProduto);
     }
 }
